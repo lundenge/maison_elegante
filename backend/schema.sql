@@ -1,0 +1,89 @@
+CREATE TABLE IF NOT EXISTS users (
+  id VARCHAR(36) PRIMARY KEY,
+  firstName VARCHAR(100) NOT NULL,
+  lastName VARCHAR(100) NOT NULL,
+  phone VARCHAR(30) NOT NULL UNIQUE,
+  email VARCHAR(255) NULL,
+  address VARCHAR(255) NULL,
+  city VARCHAR(100) NULL,
+  country VARCHAR(100) NULL,
+  continent VARCHAR(100) NULL,
+  role VARCHAR(30) NOT NULL DEFAULT 'user',
+  password VARCHAR(255) NULL,
+  welcome_promo_code VARCHAR(50) NULL,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS services (
+  id VARCHAR(36) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  category VARCHAR(50) NOT NULL,
+  description TEXT NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  image_url VARCHAR(512) NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS promo_codes (
+  id VARCHAR(36) PRIMARY KEY,
+  code VARCHAR(100) NOT NULL UNIQUE,
+  percent_off DECIMAL(10,2) NULL,
+  amount_off_usd DECIMAL(10,2) NULL,
+  max_uses INT NULL,
+  expires_at DATETIME NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  uses INT NOT NULL DEFAULT 0,
+  welcome_for_user_id VARCHAR(36) NULL,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS bookings (
+  id VARCHAR(36) PRIMARY KEY,
+  user_id VARCHAR(36) NOT NULL,
+  service_id VARCHAR(36) NOT NULL,
+  service_name VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL DEFAULT 1,
+  event_date DATETIME NOT NULL,
+  notes TEXT NULL,
+  payment_method VARCHAR(20) NOT NULL,
+  currency VARCHAR(10) NOT NULL DEFAULT 'USD',
+  language VARCHAR(10) NOT NULL DEFAULT 'en',
+  promo_code VARCHAR(100) NULL,
+  subtotal_usd DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  discount_usd DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  paid TINYINT(1) NOT NULL DEFAULT 0,
+  status VARCHAR(50) NOT NULL,
+  receipt_id VARCHAR(36) NULL,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS receipts (
+  id VARCHAR(36) PRIMARY KEY,
+  user_id VARCHAR(36) NOT NULL,
+  booking_id VARCHAR(36) NOT NULL,
+  number VARCHAR(100) NOT NULL,
+  service_name VARCHAR(255) NOT NULL,
+  service_id VARCHAR(36) NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  currency VARCHAR(10) NOT NULL DEFAULT 'USD',
+  status VARCHAR(50) NOT NULL,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS scanned_receipts (
+  id VARCHAR(36) PRIMARY KEY,
+  user_id VARCHAR(36) NOT NULL,
+  raw_data TEXT NOT NULL,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS payment_sessions (
+  id VARCHAR(36) PRIMARY KEY,
+  booking_id VARCHAR(36) NOT NULL,
+  session_id VARCHAR(100) NOT NULL UNIQUE,
+  checkout_url VARCHAR(512) NOT NULL,
+  payment_status VARCHAR(30) NOT NULL DEFAULT 'pending',
+  created_at DATETIME NOT NULL
+);

@@ -1,0 +1,8 @@
+crons:
+  - name: event-reminders
+    description: "Sends 24h event reminder emails to clients every day at 09:00 UTC"
+    cron: "0 9 * * *"
+    endpoint: "{{BASE_URL}}/api/cron/reminders"
+    method: POST
+    # Cron endpoints must ack 2xx immediately; enqueue/background the actual work.
+    enabled: true

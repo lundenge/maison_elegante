@@ -1,0 +1,134 @@
+{
+  "project_context": {
+    "app_type": "Hybrid Fullstack (Customer Booking Site + Multi-role SaaS Dashboard)",
+    "industry": "Premium Event Services, Catering, Rentals, and Gifting",
+    "emotional_tone": "Luxury & Organic (Marketing) + High-Contrast Authority (Dashboard)"
+  },
+  "theme": {
+    "strategy": "Dual-Theme Hybrid",
+    "customer_facing": "Light Mode (Warm Sand/Bone White) for approachability, trust, and elegance.",
+    "admin_dashboard": "Dark Mode (Midnight Blue/Slate) for high-density data, focus, and premium tactical feel."
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Playfair Display, serif",
+      "weights": [400, 700, 900],
+      "rules": "CRITICAL: BANNED generic sans for headings. Use Playfair Display for all major headings. Use tight tracking (`tracking-tight`) for sizes > 32px. Never exceed text-6xl for hero."
+    },
+    "body": {
+      "font_family": "Manrope, sans-serif",
+      "weights": [300, 400, 500, 600],
+      "rules": "Clean, highly legible geometric sans for all dashboard data, forms, and paragraphs. Loose line-height (`leading-relaxed`) for marketing body, tight for dashboard tables."
+    },
+    "labels_overlines": {
+      "rules": "Must be Uppercase + Tiny (`text-xs`) + Wide Spacing (`tracking-[0.2em]`)."
+    }
+  },
+  "colors": {
+    "archetype": "ARCHETYPE 5: LUXURY mixed with SWISS & HIGH-CONTRAST for Admin",
+    "marketing_light": {
+      "background": "#FDFBF7",
+      "surface": "#FFFFFF",
+      "text": "#0F172A",
+      "text_muted": "#475569",
+      "primary": "#D4AF37",
+      "primary_hover": "#B8962E",
+      "border": "#E2E8F0"
+    },
+    "dashboard_dark": {
+      "background": "#0B0F19",
+      "surface": "#111827",
+      "surface_elevated": "#1E293B",
+      "text": "#F8FAFC",
+      "text_muted": "#94A3B8",
+      "primary": "#D4AF37",
+      "border": "#1E293B",
+      "success": "#059669",
+      "danger": "#E11D48"
+    },
+    "rules": "Never use pure #000000. Always tint darks with blue/slate. Always explicitly set hover text color. Ensure APCA/WCAG contrast minimums."
+  },
+  "grids_and_layouts": {
+    "marketing_layout": {
+      "mode": "MODE A: THE 'TETRIS' GRID",
+      "rules": "Asymmetry and visual tension. Base grid: grid-cols-1 md:grid-cols-12. Gap: gap-8 to gap-12. Use overlapping elements. Never perfectly fill 100% of the grid."
+    },
+    "dashboard_layout": {
+      "mode": "MODE B: HIGH DENSITY GRID",
+      "rules": "Density and data correlation. Base grid: grid-cols-1 md:grid-cols-4. Gap: gap-4 or gap-6. Use 'Grid Borders (Technical Look)' with border-collapse and subtle border-border/40."
+    },
+    "spacing_system": "Generous Spacing Philosophy. Use 2-3x more spacing than typical (e.g., p-8 to p-12). Containers with borders MUST have internal padding p-6 or p-8. Ensure max-h-[80vh] on mobile hero images."
+  },
+  "visual_enhancers": {
+    "surfaces": {
+      "headers": "Glassmorphism (Crystal/Apple Variant): bg-white/70 or bg-black/60 with backdrop-blur-xl, 1px delicate inner stroke, and backdrop-saturate-150.",
+      "dashboard_cards": "Grid Borders (The 'Technical' Look): Exposed skeleton, subtle bottom/right borders on grid items. Flat background, no muddy shadows.",
+      "marketing_hero": "Hero Image Overlay Max opacity: bg-black/50. If text needs contrast, use a gradient overlay, not a flat blanket. Add subtle grain/noise texture overlay to kill digital flatness."
+    },
+    "motion": {
+      "rules": "Every interaction needs micro-animations. Exclude transforms from universal transitions. Use staggered entrance animations for service lists and dashboard widgets. Respect prefers-reduced-motion."
+    }
+  },
+  "components": {
+    "strategy": "Hybrid: Pure HTML+Tailwind for Marketing layouts. Shadcn UI heavily customized for forms, tables, and dialogs.",
+    "buttons": "Pill-shaped or sharp rectangular based on context. Add interaction animations (scale down on active).",
+    "forms": "Use Shadcn Form, Input, Select, Calendar. Do not use native HTML inputs. Left-align labels.",
+    "tables": "Use Shadcn Table for Admin Dashboard. Dense spacing, hover states for rows, clear typography for financial data.",
+    "charts": "Use Recharts (via Shadcn Chart components) for business analytics (revenue, orders over time). Accessible color palettes required.",
+    "receipt_upload": "Use react-dropzone for AI OCR receipt photo upload area. Style with dashed borders and hover states.",
+    "toast": "Use Sonner for all success/error notifications (e.g., booking confirmed, payment failed)."
+  },
+  "image_urls": {
+    "hero_catering": {
+      "url": "https://images.unsplash.com/photo-1740047602722-b4993b79e4b7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBjYXRlcmluZyUyMGV2ZW50fGVufDB8fHx8MTc4NTU0NTg4NHww&ixlib=rb-4.1.0&q=85",
+      "description": "Luxurious table with food setup, ideal for the catering service or hero background."
+    },
+    "service_party_org": {
+      "url": "https://images.unsplash.com/photo-1763553113391-a659bee36e06?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxlbGVnYW50JTIwcGFydHklMjBsaWdodGluZyUyMHNldHVwfGVufDB8fHx8MTc4NTU0NTg4NHww&ixlib=rb-4.1.0&q=85",
+      "description": "Elegant party lighting and reception setup, perfect for Party Organization service."
+    },
+    "service_gifts": {
+      "url": "https://images.pexels.com/photos/29873585/pexels-photo-29873585.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Elegant wrapped birthday gift boxes, perfect for Birthday Gift Delivery service."
+    },
+    "service_rentals": {
+      "url": "https://images.unsplash.com/photo-1530023367847-a683933f4172?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjY2NjV8MHwxfHNlYXJjaHwxfHxldmVudCUyMHJlbnRhbCUyMGNoYWlycyUyMHRhYmxlc3xlbnwwfHx8fDE3ODU1NDU4ODR8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Selective focus dining table setup, ideal for Party Item Rentals."
+    }
+  },
+  "libraries_and_tools": {
+    "icons": "lucide-react (Default) or @phosphor-icons/react (for luxury duotone weight)",
+    "animations": "framer-motion (Page transitions, component entrance)",
+    "scrolling": "lenis (Mandatory for smooth premium scrolling on marketing pages)",
+    "pdf_generation": "jspdf + html2canvas (For receipt download functionality)",
+    "payments": "@stripe/react-stripe-js (For advanced payment processing)"
+  },
+  "testing": {
+    "attributes": "All interactive and key informational elements MUST include `data-testid` attribute (kebab-case, role-based)."
+  },
+  "GENERAL_UI_UX_DESIGN_GUIDELINES": [
+    "Design for emotional connection first. Every page must feel emotionally directed.",
+    "Use 2-3x more spacing than typical. Breathing room creates a premium feel.",
+    "Do not use generic centered layouts or standard 'Bootstrap' columns. Use asymmetry and tension.",
+    "Create depth through layered design elements with z-index hierarchy and glassmorphism.",
+    "Implement micro-animations for all interactive states (hover, click, focus).",
+    "Ensure high accessibility: sufficient contrast (WCAG AA), explicit hover/focus states.",
+    "Never use purely transparent backgrounds behind text unless the image has a significant scrim/overlay."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid the 'AI slop' aesthetic.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: `transition: all`. Always add transitions for specific interactive elements.",
+    "You MUST NOT center align the app container. Do not add `.App { text-align: center; }` in the css file.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Use `sonner` for toasts.",
+    "Never use placeholder image URLs. Use the provided image URLs or search for real ones if needed."
+  ]
+}
