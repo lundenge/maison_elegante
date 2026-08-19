@@ -25,7 +25,7 @@ export default function AdminLayout() {
       <aside className="w-64 border-r border-white/10 py-8 px-5 sticky top-0 h-screen hidden md:flex flex-col">
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-serif text-xl tracking-tight">Maison<span className="text-[#D4AF37]">·</span>Élégante</p>
+            <p className="font-serif text-xl tracking-tight">Élégante<span className="text-[#D4AF37]">·</span>Suprise</p>
             <p className="overline text-slate-500 mt-1">{t("admin.console")}</p>
           </div>
           <LanguageSwitcher dark />

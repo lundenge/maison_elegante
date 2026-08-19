@@ -60,22 +60,25 @@ export default function AdminServices() {
       )}
 
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {items.map((s) => (
-          <div key={s.id} className="bg-[#111827] border border-white/5 rounded-2xl overflow-hidden">
-            {s.image_url && <img src={s.image_url} alt={s.name} className="w-full h-40 object-cover"/>}
-            <div className="p-5">
-              <p className="overline text-slate-500">{t(`cat.${s.category}`) || s.category}</p>
-              <p className="font-serif text-lg mt-2">{s.name}</p>
-              <p className="text-xs text-slate-400 mt-2 line-clamp-2">{s.description}</p>
-              <div className="mt-4 flex items-center justify-between">
-                <p className="font-serif text-xl text-[#D4AF37]">${s.price.toFixed(2)}</p>
-                <button onClick={() => remove(s.id)} className="text-rose-400 hover:text-rose-300" data-testid={`svc-delete-${s.id}`}>
-                  <Trash2 size={14}/>
-                </button>
+        {items.map((s) => {
+          const price = Number(s.price ?? 0);
+          return (
+            <div key={s.id} className="bg-[#111827] border border-white/5 rounded-2xl overflow-hidden">
+              {s.image_url && <img src={s.image_url} alt={s.name} className="w-full h-40 object-cover"/>}
+              <div className="p-5">
+                <p className="overline text-slate-500">{t(`cat.${s.category}`) || s.category}</p>
+                <p className="font-serif text-lg mt-2">{s.name}</p>
+                <p className="text-xs text-slate-400 mt-2 line-clamp-2">{s.description}</p>
+                <div className="mt-4 flex items-center justify-between">
+                  <p className="font-serif text-xl text-[#D4AF37]">${Number.isFinite(price) ? price.toFixed(2) : "0.00"}</p>
+                  <button onClick={() => remove(s.id)} className="text-rose-400 hover:text-rose-300" data-testid={`svc-delete-${s.id}`}>
+                    <Trash2 size={14}/>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <style>{`.dark-input { background: #0B0F19; border: 1px solid #1E293B; border-radius: 0.5rem; padding: 0.7rem 1rem; color: #F8FAFC; font-size: 0.85rem; outline: none; transition: border-color 200ms ease; } .dark-input:focus { border-color: #D4AF37; }`}</style>

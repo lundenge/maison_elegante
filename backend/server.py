@@ -9,9 +9,121 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional, Literal
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from copy import deepcopy
+from types import SimpleNamespace
 import os, logging, uuid, jwt, bcrypt, stripe, httpx, asyncio
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+
+class InMemoryCollection:
+    def __init__(self, name: str):
+        self.name = name
+        self.documents = []
+
+    def _matches(self, doc: dict, query: dict) -> bool:
+        if not query:
+            return True
+        for key, expected in query.items():
+            if isinstance(expected, dict):
+                if "$in" in expected:
+                    if doc.get(key) not in expected["$in"]:
+                        return False
+                elif "$ne" in expected:
+                    if doc.get(key) == expected["$ne"]:
+                        return False
+                else:
+                    return False
+            elif doc.get(key) != expected:
+                return False
+        return True
+
+    def _project(self, doc: dict, projection=None):
+        if not projection:
+            return deepcopy(doc)
+        result = {}
+        for key, value in doc.items():
+            if key == "_id":
+                continue
+            if projection.get(key, 1) == 0:
+                continue
+            result[key] = deepcopy(value)
+        return result
+
+    async def find_one(self, query: dict, projection=None):
+        for doc in self.documents:
+            if self._matches(doc, query):
+                return self._project(doc, projection)
+        return None
+
+    async def insert_one(self, doc: dict):
+        self.documents.append(deepcopy(doc))
+        return {"inserted_id": str(uuid.uuid4())}
+
+    async def update_one(self, query: dict, update: dict):
+        for doc in self.documents:
+            if self._matches(doc, query):
+                if "$set" in update:
+                    for key, value in update["$set"].items():
+                        doc[key] = deepcopy(value)
+                if "$inc" in update:
+                    for key, value in update["$inc"].items():
+                        doc[key] = doc.get(key, 0) + value
+                return {"matched_count": 1, "modified_count": 1}
+        return {"matched_count": 0, "modified_count": 0}
+
+    async def delete_one(self, query: dict):
+        for idx, doc in enumerate(self.documents):
+            if self._matches(doc, query):
+                del self.documents[idx]
+                return {"deleted_count": 1}
+        return {"deleted_count": 0}
+
+    async def count_documents(self, query: dict):
+        return sum(1 for doc in self.documents if self._matches(doc, query))
+
+    def find(self, query: dict = None, projection=None):
+        return InMemoryCursor(self, query or {}, projection or {})
+
+
+class InMemoryCursor:
+    def __init__(self, collection: InMemoryCollection, query: dict, projection: dict):
+        self.collection = collection
+        self.query = query
+        self.projection = projection
+        self._sort_key = None
+        self._sort_desc = False
+
+    def sort(self, key: str, direction: int = -1):
+        self._sort_key = key
+        self._sort_desc = direction == -1
+        return self
+
+    async def to_list(self, limit: int = 500):
+        docs = [doc for doc in self.collection.documents if self.collection._matches(doc, self.query)]
+        if self._sort_key:
+            docs = sorted(docs, key=lambda d: d.get(self._sort_key, ""), reverse=self._sort_desc)
+        if limit is not None:
+            docs = docs[:limit]
+        return [self.collection._project(doc, self.projection) for doc in docs]
+
+
+class InMemoryDatabase:
+    def __init__(self):
+        self.users = InMemoryCollection("users")
+        self.services = InMemoryCollection("services")
+        self.promo_codes = InMemoryCollection("promo_codes")
+        self.bookings = InMemoryCollection("bookings")
+        self.receipts = InMemoryCollection("receipts")
+        self.scanned_receipts = InMemoryCollection("scanned_receipts")
+        self.payment_transactions = InMemoryCollection("payment_transactions")
+
+
+db = InMemoryDatabase()
+sync_db = SimpleNamespace(payment_transactions=InMemoryCollection("payment_transactions"))
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')

@@ -132,8 +132,51 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 py-10 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} Maison Élégante · {t("landing.footer")}
+      <footer className="border-t border-slate-200 bg-[#F7F3EA] py-12 text-slate-600">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid gap-8 md:grid-cols-3">
+          <div>
+            <p className="text-lg font-semibold text-[#0F172A]">Élégante Suprise</p>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed">
+              {t("landing.footer")}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Follow us</p>
+            <div className="mt-4 flex flex-wrap gap-2 text-sm">
+              {[
+                ["Facebook", "https://facebook.com/maisonellegante"],
+                ["WhatsApp", "https://wa.me/15551234567"],
+                ["Instagram", "https://instagram.com/maisonellegante"],
+                ["TikTok", "https://www.tiktok.com/@maisonellegante"],
+                ["Telegram", "https://t.me/maisonellegante"],
+                ["YouTube", "https://youtube.com/@maisonellegante"],
+              ].map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-slate-300 px-3 py-1.5 transition hover:border-[#D4AF37] hover:text-[#0F172A]"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Visit us</p>
+            <p className="mt-4 text-sm leading-relaxed">
+              24 Av Bukavu<br />
+              Uvira Sud kivu, DRCongo<br />
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">
+          © {new Date().getFullYear()} Élégante Suprise. All rights reserved.
+        </div>
       </footer>
     </div>
   );

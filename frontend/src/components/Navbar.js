@@ -21,7 +21,7 @@ export default function Navbar({ variant = "light" }) {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
         <Link to="/" data-testid={NAV.brand} className="flex items-center gap-2">
           <span className="font-serif text-2xl tracking-tight" style={{ color: dark ? "#F8FAFC" : "#0F172A" }}>
-            Maison<span className="text-[#D4AF37]">·</span>Élégante
+            Élégante<span className="text-[#D4AF37]">·</span>Suprise
           </span>
         </Link>
 
