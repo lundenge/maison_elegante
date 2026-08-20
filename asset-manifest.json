@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/maison_elegante/static/css/main.5a1002d1.css",
+    "main.js": "/maison_elegante/static/js/main.a6ade669.js",
+    "static/js/977.0296d865.chunk.js": "/maison_elegante/static/js/977.0296d865.chunk.js",
+    "static/js/455.5a5cc99f.chunk.js": "/maison_elegante/static/js/455.5a5cc99f.chunk.js",
+    "index.html": "/maison_elegante/index.html",
+    "main.5a1002d1.css.map": "/maison_elegante/static/css/main.5a1002d1.css.map",
+    "main.a6ade669.js.map": "/maison_elegante/static/js/main.a6ade669.js.map",
+    "977.0296d865.chunk.js.map": "/maison_elegante/static/js/977.0296d865.chunk.js.map",
+    "455.5a5cc99f.chunk.js.map": "/maison_elegante/static/js/455.5a5cc99f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5a1002d1.css",
+    "static/js/main.a6ade669.js"
+  ]
+}
