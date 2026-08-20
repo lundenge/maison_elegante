@@ -3,6 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useT } from "@/i18n/I18nContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { NAV } from "@/constants/testIds";
+import { formatRoleLabel } from "@/lib/utils";
 import { LayoutDashboard, ClipboardList, Users, Scan, ReceiptText, Sparkles, TicketPercent, LogOut } from "lucide-react";
 
 export default function AdminLayout() {
@@ -44,7 +45,7 @@ export default function AdminLayout() {
         </nav>
         <div className="border-t border-white/10 pt-5">
           <p className="text-xs text-slate-400">{user?.firstName} {user?.lastName}</p>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] mt-1">{user?.role.replace("_", " ")}</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] mt-1">{formatRoleLabel(user?.role)}</p>
           <button data-testid={NAV.logout} onClick={() => { logout(); nav("/"); }}
             className="mt-4 w-full inline-flex items-center gap-2 text-xs text-slate-400 hover:text-rose-400 transition-colors">
             <LogOut size={14}/> {t("nav.signout")}

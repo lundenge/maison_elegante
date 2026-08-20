@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "@/lib/api";
+import { api, getApiErrorMessage } from "@/lib/api";
 import { useT } from "@/i18n/I18nContext";
 import { SCAN } from "@/constants/testIds";
 import { UploadCloud, Sparkles, Loader2 } from "lucide-react";
@@ -29,7 +29,7 @@ export default function AdminScan() {
       const { data } = await api.post("/receipts/scan", { image_base64: b64 });
       setResult(data.raw_data);
       toast.success(t("admin.scan.success"));
-    } catch (err) { toast.error(err?.response?.data?.detail || t("admin.scan.fail")); }
+    } catch (err) { toast.error(getApiErrorMessage(err, t("admin.scan.fail"))); }
     finally { setLoading(false); }
   };
 

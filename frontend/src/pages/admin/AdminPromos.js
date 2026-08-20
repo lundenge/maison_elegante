@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { api } from "@/lib/api";
+import { api, getApiErrorMessage } from "@/lib/api";
 import { useT } from "@/i18n/I18nContext";
 import { toast } from "sonner";
 import { Plus, Trash2, TicketPercent, TrendingUp } from "lucide-react";
@@ -30,7 +30,7 @@ export default function AdminPromos() {
       await api.post("/admin/promo-codes", body);
       toast.success(t("admin.promo.created"));
       setForm(EMPTY); setOpen(false); load();
-    } catch (err) { toast.error(err?.response?.data?.detail || "Failed"); }
+    } catch (err) { toast.error(getApiErrorMessage(err, "Failed")); }
   };
 
   const remove = async (id) => {

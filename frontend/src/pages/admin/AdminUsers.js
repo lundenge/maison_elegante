@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-import { api } from "@/lib/api";
+import { api, getApiErrorMessage } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { useT } from "@/i18n/I18nContext";
 import { ADMIN } from "@/constants/testIds";
+import { formatRoleLabel } from "@/lib/utils";
 import { toast } from "sonner";
 import { UserPlus, Trash2 } from "lucide-react";
 
@@ -25,13 +26,13 @@ export default function AdminUsers() {
       setForm({ firstName: "", lastName: "", phone: "", email: "", password: "" });
       setOpen(false);
       load();
-    } catch (err) { toast.error(err?.response?.data?.detail || "Failed"); }
+    } catch (err) { toast.error(getApiErrorMessage(err, "Failed")); }
   };
 
   const remove = async (id) => {
     if (!window.confirm(t("admin.users.confirm"))) return;
     try { await api.delete(`/super-admin/users/${id}`); load(); toast.success(t("admin.users.deleted")); }
-    catch { toast.error("Failed"); }
+    catch (err) { toast.error(getApiErrorMessage(err, "Failed")); }
   };
 
   return (
@@ -82,7 +83,7 @@ export default function AdminUsers() {
                   <span className={`text-xs px-2 py-0.5 rounded-full uppercase tracking-[0.15em] ${
                     u.role === "super_admin" ? "bg-[#D4AF37]/20 text-[#D4AF37]" :
                     u.role === "admin" ? "bg-blue-900/40 text-blue-400" : "bg-slate-800 text-slate-400"
-                  }`}>{u.role.replace("_", " ")}</span>
+                  }`}>{formatRoleLabel(u.role)}</span>
                 </td>
                 <td className="p-4 text-slate-500 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                 {isSuper && (

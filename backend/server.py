@@ -13,7 +13,12 @@ from copy import deepcopy
 from types import SimpleNamespace
 import os, logging, uuid, jwt, bcrypt, stripe, httpx, asyncio
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+try:
+    from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+except ModuleNotFoundError:  # pragma: no cover - optional dependency
+    LlmChat = None
+    UserMessage = None
+    ImageContent = None
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -666,6 +671,9 @@ async def admin_receipts(admin=Depends(require_admin)):
 
 @api.post("/receipts/scan")
 async def scan_receipt(payload: ReceiptScanIn, admin=Depends(require_admin)):
+    if LlmChat is None or UserMessage is None or ImageContent is None:
+        raise HTTPException(503, "Receipt OCR is unavailable because the optional LLM dependency is not installed.")
+
     b64 = payload.image_base64
     if b64.startswith("data:"):
         b64 = b64.split(",", 1)[1]

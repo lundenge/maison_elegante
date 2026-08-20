@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import { api } from "@/lib/api";
+import { api, getApiErrorMessage } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { useT } from "@/i18n/I18nContext";
 import { AUTH } from "@/constants/testIds";
@@ -30,7 +30,7 @@ export default function RegisterPage() {
       toast.success(t("register.success"));
       nav("/services");
     } catch (err) {
-      toast.error(err?.response?.data?.detail || t("register.fail"));
+      toast.error(getApiErrorMessage(err, t("register.fail")));
     } finally { setLoading(false); }
   };
 

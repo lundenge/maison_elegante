@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import { api } from "@/lib/api";
+import { api, getApiErrorMessage } from "@/lib/api";
 import { useT } from "@/i18n/I18nContext";
 import { useCurrency } from "@/context/CurrencyContext";
 import { BOOKING } from "@/constants/testIds";
@@ -42,7 +42,7 @@ export default function BookingPage() {
       toast.success(t("booking.promo.applied", { code: data.code }));
     } catch (err) {
       setPromo(null);
-      toast.error(err?.response?.data?.detail || t("booking.promo.invalid"));
+      toast.error(getApiErrorMessage(err, t("booking.promo.invalid")));
     } finally { setPromoChecking(false); }
   };
 
@@ -74,7 +74,7 @@ export default function BookingPage() {
         nav(`/receipt/${booking.receipt_id}`);
       }
     } catch (err) {
-      toast.error(err?.response?.data?.detail || t("booking.fail"));
+      toast.error(getApiErrorMessage(err, t("booking.fail")));
     } finally { setSubmitting(false); }
   };
 

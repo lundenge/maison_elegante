@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import { api } from "@/lib/api";
+import { api, getApiErrorMessage } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { useT } from "@/i18n/I18nContext";
 import { AUTH } from "@/constants/testIds";
@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
       toast.success(`${t("login.admin.welcome")}, ${data.user.firstName}`);
       nav("/admin");
     } catch (err) {
-      toast.error(err?.response?.data?.detail || t("login.admin.fail"));
+      toast.error(getApiErrorMessage(err, t("login.admin.fail")));
     } finally { setLoading(false); }
   };
 
